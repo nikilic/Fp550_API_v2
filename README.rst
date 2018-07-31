@@ -11,7 +11,7 @@ DV: Izmenjen simulator:
     1. U commands.recv() dodat
      `port_buff= b"\x01abcdata1\x31\xc1\xc0\x80dddata2\x04STATUS\x05bcc\x03"`
      kao konstanta umesto serial.port.read()
-    2.Izmenjene if i elif da rade sa integer jer je port_buff type bytes, tj svaki byte je integer.  
+    2. Izmenjene if i elif da rade sa integer jer je port_buff type bytes, tj svaki byte je integer.  
     3. Dodat ispravan print u ascii i hex celog line[].  
     4. Return output vraca LEN,SEQ,CMD, STATUS, recv_pack_data   
     5. Uradjen i testiran "operationId: app.g11_cmd" koji prenosi recv - return output na REST API  
