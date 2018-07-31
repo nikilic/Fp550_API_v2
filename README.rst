@@ -16,7 +16,8 @@ DV: Izmenjen simulator:
     4. Return output vraca LEN,SEQ,CMD, STATUS, recv_pack_data   
     5. Uradjen i testiran "operationId: app.g11_cmd" koji prenosi recv - return output na REST API  
     6. Testiranje sa http://0.0.0.0:8090/ui/#!/G1_Commands/app_g11_cmd  
-        {
+ ### API RESPONSE
+ {
   "Cmd": 99,
   "LEN": 97,
   "SEQ": 98,
