@@ -3,13 +3,25 @@ import connexion
 import datetime
 import logging
 import json
+import config
 
 from connexion import NoContent
-
+from commands import cmd_Get_Date_Time, cmd_Get_PIB, cmd_Paper_Move, cmd_Get_Status
 import orm
-
+if config.sim:
+    """
+    pck_Data = "\x80\x80\x80\x85\x80\xba"  # hex(ord("a"))
+    pck_Len = hex(ord("b"))
+    pck_Cmd = hex(ord("c"))
+    pck_Seq = hex(ord("d"))
+    pck_Sts = hex(ord("e"))
+    """
 
 db_session = None
+def g11_cmd():
+    output =cmd_Get_Date_Time()
+    return output
+
 def post_greeting(name: str) -> str:
     return 'Hello {name}'.format(name=name)
 def post_greeting1():

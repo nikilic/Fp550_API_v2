@@ -13,20 +13,25 @@ security:
 paths:
   /g11_cmd:
     get:
-      summary: Generate greeting
+      summary: G11 command
       tags: [G1_Commands]
-      operationId: app.post_greeting1
+      operationId: app.g11_cmd
 
 
       responses:
         200:
-          description: greeting response
+          description: Date-time response
           schema:
             type: object
           examples:
-            "text/plain": "Hello John"
 
-      description: Generates a greeting message.
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
+
+      description: Generates FP550 Cmd_Date_Time return message.
   /greeting/{name}:
     get:
       summary: Generate greeting

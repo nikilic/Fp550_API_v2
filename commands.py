@@ -9,6 +9,7 @@ import config
 
 if config.sim == False:
     port = serial.Serial("/dev/ttyUSB0", baudrate=19200, timeout=14.0)
+    #port = serial.
 
 # print chr(SALE)
 #print SUBTOTAL, TOTAL
@@ -34,7 +35,7 @@ def build_packet(cmd, data = ""):
 #    global seq_num
     packet = ""
     packet = packet + chr(STX) # \x01
-    lenbyte=0x20+4+len(data)
+    lenbyte =0x20+4+len(data)
     packet = packet + chr(lenbyte)  #<< 0x20 + 4 + data.b.length
     packet=packet+ chr(seq_num())  #'\x22' #SEQ
     packet=packet+chr(cmd)
@@ -43,9 +44,9 @@ def build_packet(cmd, data = ""):
     packet=packet+bcc(packet)
     packet=packet+chr(ETX)
     
-    for character in packet:
-      print character, character.encode('hex'),';',
-    print '-->'
+    #for character in packet:
+      #print (character, character.encode('hex'),';',)
+    print ('-->')
        
     return packet
 #Sequence number , svaki poziv inkrementuje, ako je seq_num(false) ne inkrementuje(zadrzava prethodni)
@@ -68,72 +69,89 @@ def recv():
         line= []
         eot=0
         bIx=0
-        print" RECEIVED packet from FP550"
+        print(" RECEIVED packet from FP550")
+#        port_buff = port.read()
+        port_buff = b"\x01abcdata1\x31\xc1\xc0\x80dddata2\x04STATUS\x05bcc\x03"  #.encode("cp1252")
+        '''for c in port_buff:
+            line.append(c)
+            bIx=bIx+1 
+        '''
         while eot==0:
-            for c in port.read():
-                if c=='\x16':
-                    print "ACK",
+            for c in port_buff:
+                if c == 22:
+                    print( "ACK",)
                     break
                 line.append(c)
                 bIx=bIx+1
                 #print len(line), hex(ord(c)),';;',           
 
-                if c=='\x03' : # or c=='\x16':
+                if c == 3:  # or c=='\x16':
                     eot=1
-                    print 'eot'
+                    print ('eot')
                     #print line
-                    str1 = "".join(line)
+#                    str1 = "".join(line)
                     #str1=[:-3]
-                    print "Article:"
+                    print ("Article:")
                 
-                    print (repr(str1).replace(" ",""))
-                    print 'bIx=', bIx
-                    line=[]
-                elif c=='\x01':
+#                    print (repr(str1).replace(" ",""))
+                    print ('bIx=', bIx)
+                    #line=[]
+                elif c == 1:
                     bIx=1
-                    break
-                elif bIx==2:
-                    print "--->"
-                    pck_Len=hex(ord(c))
+                    #  break
+                elif bIx == 2:
+                    print ("--->")
+                    pck_Len = c #hex(ord(c))
                     #print 'LEN', hex(ord(c))
-                    break
+                    #  break
                 elif  bIx==3:
-                    pck_Seq=hex(ord(c))
+                    pck_Seq= c #hex(ord(c))
                     #print'SEQ', hex(ord(c))
-                    break
+                    #  break
                 elif  bIx==4:
-                    pck_Cmd=hex(ord(c))
+                    pck_Cmd=c #hex(ord(c))
                     #print'CMD', hex(ord(c))
-                    break
-                elif c=='\x04':
-                    print 'Poz EndData-x04=',bIx
+                    #  break
+                elif c == 4:
+                    print( 'Poz EndData-x04=',bIx)
                     #print line[4:(bIx-1)]
                     bSt=bIx
-                    str_data = "".join(line[4:(bIx-1)])
+                    #str_data = "".join(line[4:(bIx-1)])
                     #print 'DATA Field:', #str_data
                     #print (repr(str_data).replace(" ",""))
-                    pck_Data=repr(str_data).replace(" ","")
-                    break
-                elif c=='\x05':
-                    print 'Poz EndStatus -x05=',bIx
+                    pck_Data = line[4:bSt]  #repr(str_data).replace(" ","")
+                    print(pck_Data)
+                    #  break
+                elif c == 5:
+                    print('Poz EndStatus -x05=',bIx)
                     #str_data1 = "".join(line[bSt:(bIx-1)])
                     pck_Sts=line[bSt:(bIx-1)]
-                    print 'STATUS Field:', line[bSt:(bIx-1)]
-                    break
+                    print('STATUS Field:', line[bSt:(bIx-1)])
+                    #  break
                         
             
         #            break
         #    break
-        print line, 'out' # print what is received
+        print (line, 'out') # print what is received
+        print(''.join(chr(x) for x in line))
+        print(', '.join(hex(y) for y in line))
     else:
         pck_Data = "\x80\x80\x80\x85\x80\xba" #hex(ord("a"))
-        pck_Len = hex(ord("b"))
+        pck_Len = "\x41"
         pck_Cmd = hex(ord("c"))
         pck_Seq = hex(ord("d"))
         pck_Sts = hex(ord("e"))
+    output = {
+            "recv_pck_Data": pck_Data,
+            "LEN": pck_Len,
+            "SEQ": pck_Seq,
+            "Cmd": pck_Cmd,
+            "Status": pck_Sts
+        }
+    return output
 
 def cmd_Get_Diag():
-    print "GET DIAG x47_______________________"
+    #print "GET DIAG x47_______________________"
     data=""
     cmd1= 0x47 #GET_STATUS #\x4A
     pack=build_packet(cmd1, data)
@@ -141,8 +159,8 @@ def cmd_Get_Diag():
       print character, character.encode('hex'),';',
     print '-->' '''
     port.write(pack)  #send packet
-    print "GET DIAG-Command -Sent"
-    print 'SeqNum:',hex(seq_num(False))
+    #print "GET DIAG-Command -Sent"
+    #print 'SeqNum:',hex(seq_num(False))
 
     # Prijem odziva od FP
     recv()
@@ -172,67 +190,67 @@ def cmd_Get_PIB():
     return output
     
 def cmd_Last_Fwrite():
-    print "LAST_FWrite 0x77______________________"
+    print ("LAST_FWrite 0x77______________________")
     data=""
     cmd1= 0x6e #Last Fwrite#\x77
     pack=build_packet(cmd1, data)
     for character in pack:
-      print character, character.encode('hex'),';',
+      print (character, character.encode('hex'),';',)
 
     port.write(pack)  #send packet
-    print "Last_Fwrite-Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    print ("Last_Fwrite-Command SENT")
+    print ('SeqNum:',hex(seq_num(False)))
 
     # Prijem odziva od FP
     recv()
 def cmd_Read_Article():
     global fn
 #    fn="F"
-    print "Read Artical0x6b______________________"
+    print ("Read Artical0x6b______________________")
     data=fn
     cmd1= 0x6B #Read Article x6B
     pack=build_packet(cmd1, data)
     for character in pack:
-      print character, character.encode('hex'),';',
+      print (character, character.encode('hex'),';',)
 
     port.write(pack)  #send packet
-    print "Read Artical-Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    print ("Read Artical-Command SENT")
+    print ('SeqNum:',hex(seq_num(False)))
 
     # Prijem odziva od FP
     recv()
     
 def cmd_Write_Article():
-    print "Write Artical  0x6b______________________"
+    print ("Write Artical  0x6b______________________")
 #    data="p'"+"\xc3\x31\x2c\x31\x30\x2c\xc0\xf0\xf2\xe8\xea\xe0\xeb"
     
     usr_go=input ("Press enter to continue:")
     data="P"+"\x80"+"00034,55,ROBA-AB"
 #    data="P" + chr(0xC0)+"1234,666,ROBA-AA"
-    print 'from write art:',data
+    print ('from write art:',data)
     cmd1= 0x6B #Write Article x6B
     pack=build_packet(cmd1, data)
     for character in pack:
-      print character, character.encode('hex'),';',
+      print (character, character.encode('hex'),';',)
 
     port.write(pack)  #send packet
-    print "Write Artical-Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    print ("Write Artical-Command SENT")
+    print ('SeqNum:',hex(seq_num(False)))
     # Prijem odziva od FP
     recv()
 
 def cmd_Get_Tax():
-    print "GET TAXES _______________________"
+    print ("GET TAXES _______________________")
     usr_go=input ("Press 1 to continue:")
     data=""
     cmd1= 0x61 # ???GET_STATUS #\x4A
     pack=build_packet(cmd1, data)
     for character in pack:
-      print character, character.encode('hex'),';',
-    print '-->'
+      print (character, character.encode('hex'),';',)
+    print ('-->')
     port.write(pack)  #send packet
-    print "GET TAX-Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    #print "GET TAX-Command SENT"
+    #print 'SeqNum:',hex(seq_num(False))
 
     # Prijem odziva od FP
     recv()
@@ -240,7 +258,7 @@ def cmd_Get_Tax():
 
 
 def cmd_Get_Status():
-    print "GET STATUS _______________________"
+    print ("GET STATUS _______________________")
     usr_go=1
     #usr_go=input ("Press enter to continue:")
     data=""
@@ -252,15 +270,15 @@ def cmd_Get_Status():
     print '-->' '''
     if config.sim == False:
         port.write(pack)  #send packet
-    print "GET STATUS-Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    #print "GET STATUS-Command SENT"
+    #print 'SeqNum:',hex(seq_num(False))
     # Prijem odziva od FP
     recv()
-    print 'Recv class packet data:', pck_Data
-    print 'LEN=', pck_Len
-    print 'SEQ=', pck_Seq
-    print 'Cmd=', pck_Cmd
-    print 'Status:', pck_Sts
+    print ('Recv class packet data:', pck_Data)
+    print ('LEN=', pck_Len)
+    print ('SEQ=', pck_Seq)
+    print ('Cmd=', pck_Cmd)
+    print ('Status:', pck_Sts)
     if config.sim == False:
         port.close
     return pck_Data
@@ -289,7 +307,7 @@ def cmd_Paper_Move(lines):
     if config.sim == False:
         port.close
     return output
-    
+"""    
 def cmd_Non_Fiscal():
     print "MACRO NON FISCAL___________________________"
     cmd1=START_NON_FISCAL_DOC #0x26
@@ -329,13 +347,18 @@ def cmd_Non_Fiscal():
 
     # Prijem odziva od FP
     recv()
-
+"""
 
 def cmd_Get_Date_Time():
-    #print "GET Date_TimeS _______________________"
-    output = []
-    #print (whoami())
-    #usr_go=input ("Press enter to continue:")
+
+    rec_out = recv()
+    return rec_out
+
+
+
+"""    
+    # print (whoami())
+    # usr_go=input ("Press enter to continue:")
     data=""
     cmd1=0x3E #GET_Date_time \x3e
     pack=build_packet(cmd1, data)
@@ -355,11 +378,12 @@ def cmd_Get_Date_Time():
     output.append('Status:'+str(pck_Sts))
     if config.sim == False:
         port.close
-    return output
+"""
+#    return output
     
 def cmd_Get_Set_Tax():
     usr_go=input ("Press enter to continue:")
-    print "GET SET TAX_______________________"
+    print ("GET SET TAX_______________________")
     data=""
     cmd1=0x53 #GET_Set_TAX \x53
     pack=build_packet(cmd1, data)
@@ -367,19 +391,19 @@ def cmd_Get_Set_Tax():
       print character, character.encode('hex'),';',
     print '-->' '''
     port.write(pack)  #send packet
-    print "GET SET TAX-Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    #print "GET SET TAX-Command SENT"
+    #print 'SeqNum:',hex(seq_num(False))
 
     # Prijem odziva od FP
     recv()
-    print 'Recv class packet data:', pck_Data
-    print 'LEN=', pck_Len
-    print 'SEQ=', pck_Seq
-    print 'Cmd=', pck_Cmd
-    print 'Status:', pck_Sts
+    print ('Recv class packet data:', pck_Data)
+    print ('LEN=', pck_Len)
+    print ('SEQ=', pck_Seq)
+    print ('Cmd=', pck_Cmd)
+    print ('Status:', pck_Sts)
     port.close
 def cmd_report_ART_All():
-    print "Print All articles from DB_ !! Warrning -Long Print !!  _________"
+    print ("Print All articles from DB_ !! Warrning -Long Print !!  _________")
     usr_go=input ("Press enter to continue:")
     data="1"
     cmd1=0x6f #report art_all\x69
@@ -388,8 +412,8 @@ def cmd_report_ART_All():
       print character, character.encode('hex'),';',
     print '-->' '''
     port.write(pack)  #send packet
-    print "Report ARTICLE_ALL - Command SENT"
-    print 'SeqNum:',hex(seq_num(False))
+    #print "Report ARTICLE_ALL - Command SENT"
+    #print 'SeqNum:',hex(seq_num(False))
 
     # Prijem odziva od FP
     recv()
