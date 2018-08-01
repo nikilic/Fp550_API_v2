@@ -7,10 +7,10 @@ This is a variant of the `Connexion Example "pet shop" REST Service`_ that store
 .. _Connexion Example "pet shop" REST Service: https://github.com/hjacobs/connexion-example
 .. _SQLAlchemy: http://www.sqlalchemy.org/
 
-DV: Izmenjen simulator:
+DV: Izmenjen simulator:  
     1. U commands.recv() dodat
      `port_buff= b"\x01abcdata1\x31\xc1\xc0\x80dddata2\x04STATUS\x05bcc\x03"`
-     kao konstanta umesto serial.port.read()
+     kao konstanta umesto serial.port.read()  
     2. Izmenjene if i elif da rade sa integer jer je port_buff type bytes, tj svaki byte je integer.  
     3. Dodat ispravan print u ascii i hex celog line[].  
     4. Return output vraca LEN,SEQ,CMD, STATUS, recv_pack_data   
@@ -31,3 +31,4 @@ DV: Izmenjen simulator:
 }
 ## DV: Dodata G12 Command - cmd_Get_PIB *Aug 01 /18*
 
+Izvedena kao copy od G11_cmd sa potrebnim adaptacijama
