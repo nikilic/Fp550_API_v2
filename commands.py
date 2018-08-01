@@ -71,13 +71,14 @@ def recv():
         bIx=0
         print(" RECEIVED packet from FP550")
 #        port_buff = port.read()
-        port_buff = b"\x01abcdata1\x31\xc1\xc0\x80dddata2\x04STATUS\x05bcc\x03"  #.encode("cp1252")
+#        print (port_buff)
+#        port_buff = b"\x01abcdata1\x31\xc1\xc0\x80dddata2\x04STATUS\x05bcc\x03"  #.encode("cp1252")
         '''for c in port_buff:
             line.append(c)
             bIx=bIx+1 
         '''
-        while eot==0:
-            for c in port_buff:
+        while eot == 0:
+            for c in port.read():  # port_buff:
                 if c == 22:
                     print( "ACK",)
                     break
@@ -350,6 +351,13 @@ def cmd_Non_Fiscal():
 """
 
 def cmd_Get_Date_Time():
+    data=""
+    cmd1=0x3E #GET_Date_time \x3e
+    pack=build_packet(cmd1, data)
+
+    if config.sim == False:
+        pack_bytes=pack.encode()
+        port.write(pack_bytes)  #send packet
 
     rec_out = recv()
     return rec_out
