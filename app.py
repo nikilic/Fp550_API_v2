@@ -19,7 +19,7 @@ if config.sim:
 
 db_session = None
 def g11_cmd():
-    output =cmd_Get_Date_Time()
+    output = cmd_Get_Date_Time()
     return output
 
 def post_greeting(name: str) -> str:
