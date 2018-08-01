@@ -51,6 +51,32 @@ paths:
             "Cmd": pck_Cmd
             "Status": pck_Sts
             "recv_pck_Data": pck_Data
+  /g13_cmd/{n_lines}:
+    get:
+      summary: G13 command-Move paper N-lines
+      tags: [G1_Commands]
+      operationId: app.g13_cmd
+      description: Force FP550 to Move paper N lines (no return data message).
+
+      responses:
+        200:
+          description: Move paper response
+          schema:
+            type: object
+          examples:
+
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
+      parameters:
+        - name: n_lines
+          in: path
+          description: Name of the person to greet.
+          required: true
+          type: integer
+
 
 
   /greeting/{name}:
