@@ -29,3 +29,5 @@ DV: Izmenjen simulator:
     50,
     4  ]
 }
+## DV: Dodata G12 Command - cmd_Get_PIB
+
