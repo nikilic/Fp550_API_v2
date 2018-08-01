@@ -166,30 +166,20 @@ def cmd_Get_Diag():
     # Prijem odziva od FP
     recv()
 def cmd_Get_PIB():
-    output = []
-    output.append("GET PIB 0x63______________________")
+    # ref app.g12_cmd
     data=""
     cmd1= 0x63 #GET_PIB #\x63
     pack=build_packet(cmd1, data)
-    ''' for character in pack:
-      print character, character.encode('hex'),#';',
-    print '-->' '''
-    if config.sim == False:
-        port.write(pack)  #send packet
-    #print "GET PIB-Command SENT"
-    #print 'SeqNum:',hex(seq_num(False))
 
-    # Prijem odziva od FP
-    recv()
-    output.append('Recv class packet data:'+str(pck_Data))
-    output.append('LEN='+str(pck_Len))
-    output.append('SEQ='+str(pck_Seq))
-    output.append('Cmd='+str(pck_Cmd))
-    output.append('Status:'+str(pck_Sts))
     if config.sim == False:
-        port.close
-    return output
-    
+        pack_bytes = pack.encode()
+        port.write(pack_bytes)  # send packet
+# Receive FP response from serial port
+    rec_out = recv()
+    return rec_out
+
+
+
 def cmd_Last_Fwrite():
     print ("LAST_FWrite 0x77______________________")
     data=""
@@ -351,6 +341,7 @@ def cmd_Non_Fiscal():
 """
 
 def cmd_Get_Date_Time():
+    # ref: app.g11_cmd
     data=""
     cmd1=0x3E #GET_Date_time \x3e
     pack=build_packet(cmd1, data)

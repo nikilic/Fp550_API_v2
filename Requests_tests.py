@@ -21,6 +21,9 @@ resp_dict=json.loads(response.text)
 print (resp_dict)
 
 data_str=""
+"""
 for m in resp_dict['recv_pck_Data']:
     data_str=data_str + chr(m)
+    
 print ("\n Fiscal Printer Current  Date and Time: ",data_str)
+"""

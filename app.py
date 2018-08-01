@@ -21,7 +21,9 @@ db_session = None
 def g11_cmd():
     output = cmd_Get_Date_Time()
     return output
-
+def g12_cmd():
+    output = cmd_Get_PIB()
+    return output
 def post_greeting(name: str) -> str:
     return 'Hello {name}'.format(name=name)
 def post_greeting1():
