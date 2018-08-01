@@ -16,7 +16,7 @@ paths:
       summary: G11 command- Get FP Date_time
       tags: [G1_Commands]
       operationId: app.g11_cmd
-
+      description: Generates FP550 Cmd_Date_Time() return message.
 
       responses:
         200:
@@ -31,13 +31,13 @@ paths:
             "Status": pck_Sts
             "recv_pck_Data": pck_Data
 
-      description: Generates FP550 Cmd_Date_Time() return message.
+
   /g12_cmd:
     get:
       summary: G12 command-Get_PIB
       tags: [G1_Commands]
       operationId: app.g12_cmd
-
+      description: Generates FP550 Cmd_Get_PIB() return message.
 
       responses:
         200:
@@ -52,7 +52,7 @@ paths:
             "Status": pck_Sts
             "recv_pck_Data": pck_Data
 
-      description: Generates FP550 Cmd_Get_PIB() return message.
+
   /greeting/{name}:
     get:
       summary: Generate greeting
