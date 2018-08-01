@@ -25,7 +25,7 @@ def g12_cmd():
     output = cmd_Get_PIB()
     return output
 def g13_cmd(n_lines):
-    output = cmd_Get_PIB(n_lines)
+    output = cmd_Paper_Move(n_lines)
     return output
 def post_greeting(name: str) -> str:
     return 'Hello {name}'.format(name=name)
