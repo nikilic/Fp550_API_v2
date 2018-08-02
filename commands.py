@@ -336,6 +336,8 @@ def cmd_Non_Fiscal():
 
 def cmd_Get_Date_Time():
     # ref: app.g11_cmd
+    rec_out= cmd_generic(0x3E,"")
+    """
     data=""
     cmd1=0x3E #GET_Date_time \x3e
     pack=build_packet(cmd1, data)
@@ -345,9 +347,19 @@ def cmd_Get_Date_Time():
         port.write(pack_bytes)  #send packet
 
     rec_out = recv()
+    """
     return rec_out
 
+def cmd_generic(cmd_code,data="")
+''' function to be called by the specific FP operationId function '''
+    pack=build_packet(cmd_code, data)
 
+    if config.sim == False:
+        pack_bytes=pack.encode()
+        port.write(pack_bytes)  #send packet
+
+    rec_out = recv()
+    return rec_out
 
 """    
     # print (whoami())
