@@ -46,6 +46,7 @@ paths:
             type: object
           examples:
 
+            "ACKs": ack_s
             "LEN": pck_Len
             "SEQ": pck_Seq
             "Cmd": pck_Cmd
@@ -76,8 +77,86 @@ paths:
           description: Number of lines to move paper.
           required: true
           type: string
+  /g14_cmd:
+    get:
+      summary: G14 command-Get_Status
+      tags: [G1_Commands]
+      operationId: app.g14_cmd
+      description: Generates FP550 Cmd_Get_Status() return message.
 
+      responses:
+        200:
+          description: FP550 Status response
+          schema:
+            type: object
+          examples:
 
+            "ACKs": ack_s
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
+  /g15_cmd:
+    get:
+      summary: G15 command-Get_Taxes
+      tags: [G1_Commands]
+      operationId: app.g15_cmd
+      description: Generates FP550 Cmd_Get_Tax() return message.
+
+      responses:
+        200:
+          description: Tax response
+          schema:
+            type: object
+          examples:
+
+            "ACKs": ack_s
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
+  /g16_cmd:
+    get:
+      summary: G16 command-Get_Diag
+      tags: [G1_Commands]
+      operationId: app.g16_cmd
+      description: Generates FP550 Cmd_Get_Diag() return message .
+
+      responses:
+        200:
+          description: Diag response -no Data
+          schema:
+            type: object
+          examples:
+
+            "ACKs": ack_s
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
+  /g17_cmd:
+    get:
+      summary: G17 command-Report All Article
+      tags: [G1_Commands]
+      operationId: app.g17_cmd
+      description: Generates FP550 Cmd_report_all() return message.
+
+      responses:
+        200:
+          description: Report All Articles response - no data
+          schema:
+            type: object
+          examples:
+
+            "ACKs": ack_s
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
 
   /greeting/{name}:
     get:

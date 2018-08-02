@@ -6,7 +6,7 @@ import json
 import config
 
 from connexion import NoContent
-from commands import cmd_Get_Date_Time, cmd_Get_PIB, cmd_Paper_Move, cmd_Get_Status
+from commands import cmd_Get_Date_Time, cmd_Get_PIB, cmd_Paper_Move, cmd_Get_Status, cmd_Get_Tax, cmd_Get_Diag,cmd_report_ART_All
 import orm
 if config.sim:
     """
@@ -27,6 +27,21 @@ def g12_cmd():
 def g13_cmd(n_lines):
     output = cmd_Paper_Move(n_lines)
     return output
+
+def g14_cmd():
+    output = cmd_Get_Status()
+    return output
+def g15_cmd():
+    output = cmd_Get_Tax()
+    return output
+def g16_cmd():
+    output = cmd_Get_Diag()
+    return output
+def g17_cmd():
+    output = cmd_report_ART_All()
+    return output
+
+
 def post_greeting(name: str) -> str:
     return 'Hello {name}'.format(name=name)
 def post_greeting1():
