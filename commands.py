@@ -157,29 +157,13 @@ def recv():
 
 def cmd_Get_Diag():
     #print "GET DIAG x47_______________________"
-    data=""
-    cmd1= 0x47 #GET_STATUS #\x4A
-    pack=build_packet(cmd1, data)
-    '''for character in pack:
-      print character, character.encode('hex'),';',
-    print '-->' '''
-    port.write(pack)  #send packet
-    #print "GET DIAG-Command -Sent"
-    #print 'SeqNum:',hex(seq_num(False))
+    rec_out= cmd_generic(0x47,"")
 
-    # Prijem odziva od FP
-    recv()
+    return rec_out
 def cmd_Get_PIB():
-    # ref app.g12_cmd
-    data=""
-    cmd1= 0x63 #GET_PIB #\x63
-    pack=build_packet(cmd1, data)
+    # ref app.g12_cmd cmd_code = 0x63
+    rec_out= cmd_generic(0x63,"")
 
-    if config.sim == False:
-        pack_bytes = pack.encode()
-        port.write(pack_bytes)  # send packet
-# Receive FP response from serial port
-    rec_out = recv()
     return rec_out
 
 
@@ -235,60 +219,26 @@ def cmd_Write_Article():
     recv()
 
 def cmd_Get_Tax():
-    print ("GET TAXES _______________________")
-    usr_go=input ("Press 1 to continue:")
-    data=""
-    cmd1= 0x61 # ???GET_STATUS #\x4A
-    pack=build_packet(cmd1, data)
-    for character in pack:
-      print (character, character.encode('hex'),';',)
-    print ('-->')
-    port.write(pack)  #send packet
-    #print "GET TAX-Command SENT"
-    #print 'SeqNum:',hex(seq_num(False))
+    # print ("GET TAXES 0x61_______________________")
+    rec_out = cmd_generic(0x61,"")
 
-    # Prijem odziva od FP
-    recv()
+    return rec_out
 
 
 
 def cmd_Get_Status():
-    print ("GET STATUS _______________________")
-    usr_go=1
-    #usr_go=input ("Press enter to continue:")
-    data=""
-    cmd1=GET_STATUS #\x4A
-    pack=build_packet(cmd1, data)
-    ''' for character in pack:
-      print character, character.encode('hex'),';',
-    print"WRITE PACKET"
-    print '-->' '''
-    if config.sim == False:
-        port.write(pack)  #send packet
-    #print "GET STATUS-Command SENT"
-    #print 'SeqNum:',hex(seq_num(False))
-    # Prijem odziva od FP
-    recv()
-    print ('Recv class packet data:', pck_Data)
-    print ('LEN=', pck_Len)
-    print ('SEQ=', pck_Seq)
-    print ('Cmd=', pck_Cmd)
-    print ('Status:', pck_Sts)
-    if config.sim == False:
-        port.close
-    return pck_Data
+    # print ("GET STATUS 0x4a_______________________")
+    rec_out = cmd_generic(0x4a,"")
+
+    return rec_out
     
 def cmd_Paper_Move(lines):
     # ref: apt.g13_cmd
 
-    cmd1=PAPER_MOVE #'\x2c'
-    data=str(int(lines))
-    pack=build_packet(cmd1, data)
-    if config.sim == False:
-        pack_bytes=pack.encode()
-        port.write(pack_bytes)  #send packet
+    cmd1 = PAPER_MOVE #'\x2c'
+    data = str(int(lines))
+    rec_out= cmd_generic(cmd1, data)
 
-    rec_out = recv()
     return rec_out
 
     
@@ -335,19 +285,9 @@ def cmd_Non_Fiscal():
 """
 
 def cmd_Get_Date_Time():
-    # ref: app.g11_cmd
+    # ref: app.g11_cmd  cmd_code=0x3E
     rec_out= cmd_generic(0x3E,"")
-    """
-    data=""
-    cmd1=0x3E #GET_Date_time \x3e
-    pack=build_packet(cmd1, data)
 
-    if config.sim == False:
-        pack_bytes=pack.encode()
-        port.write(pack_bytes)  #send packet
-
-    rec_out = recv()
-    """
     return rec_out
 
 def cmd_generic(cmd_code,data=""):
