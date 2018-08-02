@@ -348,17 +348,9 @@ def cmd_Get_Set_Tax():
     print ('Status:', pck_Sts)
     port.close
 def cmd_report_ART_All():
-    print ("Print All articles from DB_ !! Warrning -Long Print !!  _________")
-    usr_go=input ("Press enter to continue:")
-    data="1"
-    cmd1=0x6f #report art_all\x69
-    pack=build_packet(cmd1, data)
-    ''' for character in pack:
-      print character, character.encode('hex'),';',
-    print '-->' '''
-    port.write(pack)  #send packet
-    #print "Report ARTICLE_ALL - Command SENT"
-    #print 'SeqNum:',hex(seq_num(False))
+    # ("Print All articles from DB_ !! Warrning -Long Print !!  _________")
 
-    # Prijem odziva od FP
-    recv()
+    # ref: app.g17_cmd  cmd_code=0x6F
+    rec_out= cmd_generic(0x6F,"1")
+
+    return rec_out
