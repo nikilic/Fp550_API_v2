@@ -32,3 +32,7 @@ DV: Izmenjen simulator:
 ## DV: Dodata G12 Command - cmd_Get_PIB *Aug 01 /18*
 
 Izvedena kao copy od G11_cmd sa potrebnim adaptacijama
+
+## DV: Dodata G13 Command - cmd_Move_Paper (n_lines) *Aug 01 /18*
+
+Izvedena kao copy od G11_cmd sa dodatim parametrom {n_lines}
