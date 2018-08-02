@@ -350,8 +350,8 @@ def cmd_Get_Date_Time():
     """
     return rec_out
 
-def cmd_generic(cmd_code,data="")
-''' function to be called by the specific FP operationId function '''
+def cmd_generic(cmd_code,data=""):
+    ''' function to be called by the specific FP operationId function '''
     pack=build_packet(cmd_code, data)
 
     if config.sim == False:
