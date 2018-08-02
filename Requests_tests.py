@@ -7,6 +7,7 @@ import json
 #url='http://0.0.0.0:8090/g11_cmd'
 
 url='https://fp550api.localtunnel.me/g11_cmd'
+url='https://fp550api.localtunnel.me/g12_cmd'
 response = requests.get(url)
 
 """
@@ -21,9 +22,9 @@ resp_dict=json.loads(response.text)
 print (resp_dict)
 
 data_str=""
-"""
+
 for m in resp_dict['recv_pck_Data']:
     data_str=data_str + chr(m)
     
-print ("\n Fiscal Printer Current  Date and Time: ",data_str)
-"""
+print ("\n Fiscal Printer Current  Date and Time or 'PIB': ",data_str)
+
