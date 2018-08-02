@@ -67,6 +67,7 @@ def recv():
     global pck_Seq, pck_Sts
     if config.sim == False:
         line= []
+        ack_s=[]
         eot=0
         bIx=0
         print(" RECEIVED packet from FP550")
@@ -81,6 +82,7 @@ def recv():
             for c in port.read():  # port_buff:
                 if c == 22:
                     print( "ACK",)
+                    ack_s.append(c)
                     break
                 line.append(c)
                 bIx=bIx+1
@@ -133,6 +135,7 @@ def recv():
             
         #            break
         #    break
+        print ('ACKs ',ack_s)
         print (line, 'out') # print what is received
         print(''.join(chr(x) for x in line))
         print(', '.join(hex(y) for y in line))
@@ -143,6 +146,7 @@ def recv():
         pck_Seq = hex(ord("d"))
         pck_Sts = hex(ord("e"))
     output = {
+            "ACKS": ack_s,
             "recv_pck_Data": pck_Data,
             "LEN": pck_Len,
             "SEQ": pck_Seq,
