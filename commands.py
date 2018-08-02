@@ -275,29 +275,19 @@ def cmd_Get_Status():
     return pck_Data
     
 def cmd_Paper_Move(lines):
-    output = []
-    output.append("PAPER MOVE________________________")
+    # ref: apt.g13_cmd
+
     cmd1=PAPER_MOVE #'\x2c'
     data=str(int(lines))
     pack=build_packet(cmd1, data)
-    ''' for character in pack:
-      print character, character.encode('hex'),';:',
-    print '-->' '''
     if config.sim == False:
-        port.write(pack)  #send packet
-    #print "PAPER MOVE-Command SENT"
-    #print 'SeqNum:',hex(seq_num(False))
+        pack_bytes=pack.encode()
+        port.write(pack_bytes)  #send packet
 
-    # Prijem odziva od FP
-    recv()
-    output.append('Recv class packet data:'+str(pck_Data))
-    output.append('LEN='+str(pck_Len))
-    output.append('SEQ='+str(pck_Seq))
-    output.append('Cmd='+str(pck_Cmd))
-    output.append('Status:'+str(pck_Sts))
-    if config.sim == False:
-        port.close
-    return output
+    rec_out = recv()
+    return rec_out
+
+    
 """    
 def cmd_Non_Fiscal():
     print "MACRO NON FISCAL___________________________"
