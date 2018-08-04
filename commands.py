@@ -2,8 +2,9 @@ import inspect
 #from serialtest_1Def import *
 #import serialtest_1Def
 import serial
-import time
-
+import time, datetime, os
+from flask import url_for
+from subprocess import call
 from commands_v1 import *
 import config
 
@@ -354,3 +355,19 @@ def cmd_report_ART_All():
     rec_out= cmd_generic(0x6F,"1")
 
     return rec_out
+def cmd_take_photo():
+    """ Make photo by usb camera and save timestamped.jpg into /satic/images/ """
+    pass
+    lnk = 'http://0.0.0.0:8090/'
+    st= datetime.datetime.now().strftime("%Y-%m-%d--%H-%M") # exmp: 2018-07-01--16-57
+    ts= str(st) #.split('.')[0] #eliminise miliseconds
+    # ts11="/home/pi/Public/WWWpy/static/images/"+ts+".jpg"
+    ts1="static/images/"+ts+".jpg"
+    wdir= os.getcwd()
+    print(ts1)
+    print(os.getcwd())
+    print(url_for('static', filename='img1.jpg'))
+    call(["fswebcam", "-d", "/dev/video0", "-r", "1280x720", "--top-banner", ts1], cwd=wdir)
+
+    return ts1
+

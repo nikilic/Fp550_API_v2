@@ -157,6 +157,20 @@ paths:
             "Cmd": pck_Cmd
             "Status": pck_Sts
             "recv_pck_Data": pck_Data
+  /g21_cmd:
+    get:
+      summary: G21 command-Take usb camera photo
+      tags: [G2_Commands]
+      operationId: app.g21_cmd
+      description: Take a photo by usb camera and return link to timestamped .jpg.
+
+      responses:
+        200:
+          description: link to usb photo .jpg
+          schema:
+            type: string
+
+
 
   /greeting/{name}:
     get:
