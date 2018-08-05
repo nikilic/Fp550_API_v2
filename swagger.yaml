@@ -11,6 +11,23 @@ security:
   # (only active if the TOKENINFO_URL environment variable is set)
   - oauth2: [uid]
 paths:
+  /:
+    get:
+      tags:
+        - Home Page
+      summary: Displays static page.
+      description: Displays the index html page
+      operationId: app.go_home
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successfully loaded html page.
+          schema:
+            type: string
+          examples:
+            "text/plain": "Hello John"
+
   /g11_cmd:
     get:
       summary: G11 command- Get FP Date_time

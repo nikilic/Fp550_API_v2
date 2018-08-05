@@ -10,6 +10,7 @@ from commands import cmd_Get_Date_Time, cmd_Get_PIB, cmd_Paper_Move, cmd_Get_Sta
 from commands import cmd_take_photo
 from flask import Flask, request
 import orm
+import flask
 if config.sim:
     """
     pck_Data = "\x80\x80\x80\x85\x80\xba"  # hex(ord("a"))
@@ -20,6 +21,8 @@ if config.sim:
     """
 
 db_session = None
+def go_home():
+    return flask.send_from_directory('static', 'index.html')
 def g11_cmd():
     output = cmd_Get_Date_Time()
     return output
