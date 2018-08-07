@@ -13,8 +13,9 @@ Resolving deltas: 100% (65/65), done.
 ```
 
 
-pi@raspberrypi-tri:~/Public/pyProjects $ **cd Fp550_rest_api/**
-pi@raspberrypi-tri:~/Public/pyProjects/Fp550_rest_api $ ls
+pi@raspberrypi-tri  Public/pyProjects $ **cd Fp550_rest_api/**  
+
+pi@raspberrypi-tri  Public/pyProjects/Fp550_rest_api $ **ls**
 ```
 app.py          config.py  README.md          static
 commands.py     dv_pet.db  Requests_tests.py  swagger.yaml
@@ -23,7 +24,8 @@ commands_v1.py  orm.py     requirements.txt   test.sh
 
 ## Instaliranje requirements.txt
 
-pi@raspberrypi-tri:~/Public/pyProjects/Fp550_rest_api $ ** pip3 install -r requirements.txt**  
+pi@raspberrypi-tri  Public/pyProjects/Fp550_rest_api $ **pip3 install -r requirements.txt**  
+```
 Collecting connexion (from -r requirements.txt (line 1))
   Downloading https://files.pythonhosted.org/packages/d1/80/ccb30226af521fa22ea6e2860c11d30816bfc88b02bb25c05e9fff9e97b5/connexion-1.5.2-py2.py3-none-any.whl (1.0MB)
     100% |████████████████████████████████| 1.0MB 285kB/s 
@@ -81,10 +83,11 @@ Collecting MarkupSafe>=0.23 (from Jinja2>=2.4->Flask==0.10.1->-r requirements.tx
   Downloading https://www.piwheels.org/simple/markupsafe/MarkupSafe-1.0-cp35-cp35m-linux_armv7l.whl
 Installing collected packages: PyYAML, typing, idna, certifi, chardet, urllib3, requests, jsonschema, click, clickclick, six, itsdangerous, Werkzeug, MarkupSafe, Jinja2, Flask, inflection, swagger-spec-validator, connexion, SQLAlchemy, Pyserial
 Successfully installed Flask-0.10.1 Jinja2-2.10 MarkupSafe-1.0 PyYAML-3.13 Pyserial-3.4 SQLAlchemy-1.2.10 Werkzeug-0.14.1 certifi-2018.4.16 chardet-3.0.4 click-6.7 clickclick-1.2.2 connexion-1.5.2 idna-2.7 inflection-0.3.1 itsdangerous-0.24 jsonschema-2.6.0 requests-2.19.1 six-1.11.0 swagger-spec-validator-2.3.1 typing-3.6.4 urllib3-1.23
-
+```
 ## Instaliranje  programa za kameru "fswebcam"
 
-pi@raspberrypi-tri:~/Public/pyProjects/Fp550_rest_api $ sudo apt-get install fswebcam
+pi@raspberrypi-tri   Public/pyProjects/Fp550_rest_api $ **sudo apt-get install fswebcam** 
+```
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
@@ -102,13 +105,13 @@ Unpacking fswebcam (20140113-1) ...
 Setting up fswebcam (20140113-1) ...
 Processing triggers for man-db (2.7.6.1-2) ...
 pi@raspberrypi-tri:~/Public/pyProjects/Fp550_rest_api $ 
-
+```
 ### Startovanje python3
 
-Pokrenuti na rpi3 Python 3(Idle)
-Open file: F550_rest_api/app.py
-Run module
-rezultat u Python Shell :
+1. Pokrenuti na rpi3 Python 3(Idle)
+2. Open file: F550_rest_api/app.py
+3. Run module
+4. Posmatraj rezultat u Python Shell :
 
 WARNING:connexion.operation:... OAuth2 token info URL missing. **IGNORING SECURITY REQUIREMENTS**
 INFO:werkzeug: * Running on http://0.0.0.0:8090/ (Press CTRL+C to quit)
