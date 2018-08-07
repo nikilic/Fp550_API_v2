@@ -1,24 +1,25 @@
-pi@raspberrypi-tri:~/Public $ cd pyProjects/
+pi@raspberrypi-tri:~/Public $ **cd pyProjects**/
 
 #  Clone komanda sa url preuzet iz github:
 
-pi@raspberrypi-tri:~/Public/pyProjects $ _ git clone https://github.com/dusanvel/Fp550_rest_api.git _  
-
+pi@raspberrypi-tri:~/Public/pyProjects $ **git clone https://github.com/dusanvel/Fp550_rest_api.git**  
+```
 Cloning into 'Fp550_rest_api'...
 remote: Counting objects: 119, done.
 remote: Compressing objects: 100% (98/98), done.
 remote: Total 119 (delta 65), reused 52 (delta 17), pack-reused 0
 Receiving objects: 100% (119/119), 489.60 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (65/65), done.
-pi@raspberrypi-tri:~/Public/pyProjects $ **ls
-Fp550_rest_api**
-'''
-pi@raspberrypi-tri:~/Public/pyProjects $ cd Fp550_rest_api/
+Resolving deltas: 100% (65/65), done.  
+```
+
+
+pi@raspberrypi-tri:~/Public/pyProjects $ **cd Fp550_rest_api/**
 pi@raspberrypi-tri:~/Public/pyProjects/Fp550_rest_api $ ls
+```
 app.py          config.py  README.md          static
 commands.py     dv_pet.db  Requests_tests.py  swagger.yaml
 commands_v1.py  orm.py     requirements.txt   test.sh
-'''
+```
 
 ## Instaliranje requirements.txt
 
