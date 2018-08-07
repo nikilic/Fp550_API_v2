@@ -14,6 +14,9 @@ Resolving deltas: 100% (65/65), done.
 
 
 pi@raspberrypi-tri  Public/pyProjects $ **cd Fp550_rest_api/**  
+##### To update local git with the changes from Github:
+    **git pull origin master**  
+    
 
 pi@raspberrypi-tri  Public/pyProjects/Fp550_rest_api $ **ls**
 ```
