@@ -157,8 +157,9 @@ def recv():
     return output
 
 def cmd_Get_Diag():
+    # ref app.g16_cmd cmd_code = 0x47
     #print "GET DIAG x47_______________________"
-    rec_out= cmd_generic(0x47,"")
+    rec_out= cmd_generic(0x47, "")
 
     return rec_out
 def cmd_Get_PIB():
@@ -170,7 +171,7 @@ def cmd_Get_PIB():
 
 
 def cmd_Last_Fwrite():
-    print ("LAST_FWrite 0x77______________________")
+    # print ("LAST_FWrite 0x77____Date_time__________________")
     data=""
     cmd1= 0x6e #Last Fwrite#\x77
     pack=build_packet(cmd1, data)
@@ -220,14 +221,16 @@ def cmd_Write_Article():
     recv()
 
 def cmd_Get_Tax():
+    # ref app.g15_cmd cmd_code = 0x61
     # print ("GET TAXES 0x61_______________________")
-    rec_out = cmd_generic(0x61,"")
+    rec_out = cmd_generic(0x61, "")
 
     return rec_out
 
 
 
 def cmd_Get_Status():
+    # ref app.g14_cmd cmd_code = 0x4a
     # print ("GET STATUS 0x4a_______________________")
     rec_out = cmd_generic(0x4a,"")
 
@@ -302,57 +305,20 @@ def cmd_generic(cmd_code,data=""):
     rec_out = recv()
     return rec_out
 
-"""    
-    # print (whoami())
-    # usr_go=input ("Press enter to continue:")
-    data=""
-    cmd1=0x3E #GET_Date_time \x3e
-    pack=build_packet(cmd1, data)
 
-    if config.sim == False:
-        port.write(pack)  #send packet
-    output.append("Transmited command:")
-    output.append("GET_Date_Time")
-    output.append('SeqNum:'+str(hex(seq_num(False))))
 
-    # Prijem odziva od FP
-    recv()
-    output.append('Recv class packet data: '+str(pck_Data))
-    output.append('LEN='+str(pck_Len))
-    output.append('SEQ='+str(pck_Seq))
-    output.append('Cmd='+str(pck_Cmd))
-    output.append('Status:'+str(pck_Sts))
-    if config.sim == False:
-        port.close
-"""
-#    return output
-    
 def cmd_Get_Set_Tax():
-    usr_go=input ("Press enter to continue:")
-    print ("GET SET TAX_______________________")
-    data=""
-    cmd1=0x53 #GET_Set_TAX \x53
-    pack=build_packet(cmd1, data)
-    ''' for character in pack:
-      print character, character.encode('hex'),';',
-    print '-->' '''
-    port.write(pack)  #send packet
-    #print "GET SET TAX-Command SENT"
-    #print 'SeqNum:',hex(seq_num(False))
+    # ref: app.g18_cmd  cmd_code=0x53
+    # set Decimal places, set allowed taxes. If Data="" returns current taxes and dec
+    rec_out= cmd_generic(0x53, "")
 
-    # Prijem odziva od FP
-    recv()
-    print ('Recv class packet data:', pck_Data)
-    print ('LEN=', pck_Len)
-    print ('SEQ=', pck_Seq)
-    print ('Cmd=', pck_Cmd)
-    print ('Status:', pck_Sts)
-    port.close
+    return rec_out
+
 def cmd_report_ART_All():
     # ("Print All articles from DB_ !! Warrning -Long Print !!  _________")
 
     # ref: app.g17_cmd  cmd_code=0x6F
-    rec_out= cmd_generic(0x6F,"1")
+    rec_out= cmd_generic(0x6F, "1")
 
     return rec_out
 def cmd_take_photo():

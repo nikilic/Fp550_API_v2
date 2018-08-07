@@ -119,7 +119,7 @@ paths:
       summary: G15 command-Get_Taxes
       tags: [G1_Commands]
       operationId: app.g15_cmd
-      description: Generates FP550 Cmd_Get_Tax() return message.
+      description: Generates FP550 taxes, Cmd_Get_Tax() return message.
 
       responses:
         200:
@@ -164,6 +164,26 @@ paths:
       responses:
         200:
           description: Report All Articles response - no data
+          schema:
+            type: object
+          examples:
+
+            "ACKs": ack_s
+            "LEN": pck_Len
+            "SEQ": pck_Seq
+            "Cmd": pck_Cmd
+            "Status": pck_Sts
+            "recv_pck_Data": pck_Data
+  /g18_cmd:
+    get:
+      summary: G18 command-Get_Set_Taxes
+      tags: [G1_Commands]
+      operationId: app.g18_cmd
+      description: Generates FP550 Cmd_Get_Set_Tax() return message.
+
+      responses:
+        200:
+          description: Tax response
           schema:
             type: object
           examples:

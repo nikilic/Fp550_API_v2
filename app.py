@@ -7,7 +7,7 @@ import config
 
 from connexion import NoContent
 from commands import cmd_Get_Date_Time, cmd_Get_PIB, cmd_Paper_Move, cmd_Get_Status, cmd_Get_Tax, cmd_Get_Diag,cmd_report_ART_All
-from commands import cmd_take_photo
+from commands import cmd_take_photo, cmd_Get_Set_Tax
 from flask import Flask, request
 import orm
 import flask
@@ -44,6 +44,9 @@ def g16_cmd():
     return output
 def g17_cmd():
     output = cmd_report_ART_All()
+    return output
+def g18_cmd():
+    output = cmd_Get_Set_Tax()
     return output
 def g21_cmd():
     output = cmd_take_photo()
