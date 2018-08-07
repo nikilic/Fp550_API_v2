@@ -1,8 +1,9 @@
 pi@raspberrypi-tri:~/Public $ cd pyProjects/
 
-##Clone komanda sa url preuzet iz github:
+#  Clone komanda sa url preuzet iz github:
 
-pi@raspberrypi-tri:~/Public/pyProjects $ **git clone https://github.com/dusanvel/Fp550_rest_api.git**
+pi@raspberrypi-tri:~/Public/pyProjects $ _ git clone https://github.com/dusanvel/Fp550_rest_api.git _  
+
 Cloning into 'Fp550_rest_api'...
 remote: Counting objects: 119, done.
 remote: Compressing objects: 100% (98/98), done.
