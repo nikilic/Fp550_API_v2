@@ -22,7 +22,8 @@ if config.sim:
 
 db_session = None
 def go_home():
-    return flask.send_from_directory('static', 'index.html')
+    # return flask.send_from_directory('static', 'index.html')
+    return ("<html><body><h2>  FP560 home </h2><p>For the Rest Api commands doc go to:</p><p><a href='/ui/#/'>Swagger GUI page!</a></p></body></html>")
 def g11_cmd():
     output = cmd_Get_Date_Time()
     return output
