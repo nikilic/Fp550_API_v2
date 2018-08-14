@@ -11,6 +11,33 @@ produces:
   # (only active if the TOKENINFO_URL environment variable is set)
   # - oauth2: [uid]
 paths:
+  /foo:
+    get:
+      tags:
+        - Home Page
+      summary: Displays static page.
+      description: Displays the index html page
+      operationId: app.foo_get
+      parameters:
+        - name: cmd
+          description: Some message.
+          in: query
+          type: integer
+          required: true
+        - name: DataF
+          description: Some message.
+          in: query
+          type: string
+          required: true
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successfully loaded html page.
+          schema:
+            type: string
+          examples:
+            "text/plain": "Hello John"
   /:
     get:
       tags:

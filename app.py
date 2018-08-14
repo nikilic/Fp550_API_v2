@@ -21,6 +21,9 @@ if config.sim:
     """
 
 db_session = None
+def foo_get(cmd,DataF):
+    # do something
+    return 'You send the message: {}'.format(chr(cmd) + DataF), 200
 def go_home():
     # return flask.send_from_directory('static', 'index.html')
     return ("<html><body><h2>  FP560 home </h2><p>For the Rest Api commands doc go to:</p><p><a href='/ui/#/'>Swagger GUI page!</a></p></body></html>")
