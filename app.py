@@ -8,9 +8,7 @@ from flask import request
 
 
 def g1_cmd(cmd, data):
-    hex_int = int(cmd, 16)
-    new_int = hex_int + 0x200
-    output = cmd_generic(hex(new_int), data)
+    output = cmd_generic(hex(int(cmd, 16)), data)
     return output
 
 
