@@ -45,8 +45,6 @@ paths:
           in: query
           type: string
           required: false
-      produces:
-        - text/html
       responses:
         '200':
           description: Response object
