@@ -45,7 +45,7 @@ paths:
           in: query
           type: string
           default: ""
-          required: true
+          required: false
       responses:
         '200':
           description: Response object
