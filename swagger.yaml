@@ -44,7 +44,7 @@ paths:
           description: Command data. Required for cmd-3, default 0.
           in: query
           type: string
-          required: true
+          required: false
       produces:
         - text/html
       responses:
