@@ -38,7 +38,7 @@ paths:
         - name: cmd
           description: Command ID. 1-Date_Time, 2-PIB, 3-Paper_Move, 4-Status, 5-Get_Tax, 6-Diag, 7-Report_Art_All, 8-Get_Set_Tax
           in: query
-          type: integer
+          type: string
           required: true
         - name: data
           description: Command data. Required for cmd-3, default 0.
