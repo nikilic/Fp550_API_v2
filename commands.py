@@ -253,7 +253,7 @@ def cmd_Non_Fiscal():
 
 def cmd_generic(cmd_code,data=""):
     ''' function to be called by the specific FP operationId function '''
-    pack=build_packet(hex(int(cmd_code, 16)), data)
+    pack=build_packet(int(cmd_code, 16), data)
 
     if config.sim == False:
         pack_bytes=pack.encode()
