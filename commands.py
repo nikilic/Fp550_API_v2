@@ -156,19 +156,6 @@ def recv():
         }
     return output
 
-def cmd_Get_Diag():
-    # ref app.g16_cmd cmd_code = 0x47
-    #print "GET DIAG x47_______________________"
-    rec_out= cmd_generic(0x47, "")
-
-    return rec_out
-def cmd_Get_PIB():
-    # ref app.g12_cmd cmd_code = 0x63
-    rec_out= cmd_generic(0x63,"")
-
-    return rec_out
-
-
 
 def cmd_Last_Fwrite():
     # print ("LAST_FWrite 0x77____Date_time__________________")
@@ -220,31 +207,6 @@ def cmd_Write_Article():
     # Prijem odziva od FP
     recv()
 
-def cmd_Get_Tax():
-    # ref app.g15_cmd cmd_code = 0x61
-    # print ("GET TAXES 0x61_______________________")
-    rec_out = cmd_generic(0x61, "")
-
-    return rec_out
-
-
-
-def cmd_Get_Status():
-    # ref app.g14_cmd cmd_code = 0x4a
-    # print ("GET STATUS 0x4a_______________________")
-    rec_out = cmd_generic(0x4a,"")
-
-    return rec_out
-    
-def cmd_Paper_Move(lines):
-    # ref: apt.g13_cmd
-
-    cmd1 = PAPER_MOVE #'\x2c'
-    data = str(int(lines))
-    rec_out= cmd_generic(cmd1, data)
-
-    return rec_out
-
     
 """    
 def cmd_Non_Fiscal():
@@ -288,11 +250,6 @@ def cmd_Non_Fiscal():
     recv()
 """
 
-def cmd_Get_Date_Time():
-    # ref: app.g11_cmd  cmd_code=0x3E
-    rec_out= cmd_generic(0x3E,"")
-
-    return rec_out
 
 def cmd_generic(cmd_code,data=""):
     ''' function to be called by the specific FP operationId function '''
@@ -306,21 +263,6 @@ def cmd_generic(cmd_code,data=""):
     return rec_out
 
 
-
-def cmd_Get_Set_Tax():
-    # ref: app.g18_cmd  cmd_code=0x53
-    # set Decimal places, set allowed taxes. If Data="" returns current taxes and dec
-    rec_out= cmd_generic(0x53, "")
-
-    return rec_out
-
-def cmd_report_ART_All():
-    # ("Print All articles from DB_ !! Warrning -Long Print !!  _________")
-
-    # ref: app.g17_cmd  cmd_code=0x6F
-    rec_out= cmd_generic(0x6F, "1")
-
-    return rec_out
 def cmd_take_photo():
     """ Make photo by usb camera and save timestamped.jpg into /satic/images/ """
     pass

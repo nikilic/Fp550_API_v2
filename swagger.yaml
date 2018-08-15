@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Pet Shop Example API
+  title: FP550 Printer API
   version: "0.1"
 consumes:
   - application/json
@@ -11,33 +11,6 @@ produces:
   # (only active if the TOKENINFO_URL environment variable is set)
   # - oauth2: [uid]
 paths:
-  /foo:
-    get:
-      tags:
-        - Home Page
-      summary: Displays static page.
-      description: Displays the index html page
-      operationId: app.foo_get
-      parameters:
-        - name: cmd
-          description: Some message.
-          in: query
-          type: integer
-          required: true
-        - name: DataF
-          description: Some message.
-          in: query
-          type: string
-          required: true
-      produces:
-        - text/html
-      responses:
-        '200':
-          description: Successfully loaded html page.
-          schema:
-            type: string
-          examples:
-            "text/plain": "Hello John"
   /:
     get:
       tags:
@@ -55,172 +28,37 @@ paths:
           examples:
             "text/plain": "Hello John"
 
-  /g11_cmd:
+  /g1:
     get:
-      summary: G11 command- Get FP Date_time
       tags: [G1_Commands]
-      operationId: app.g11_cmd
-      description: Generates FP550 Cmd_Date_Time() return message.
-
-      responses:
-        200:
-          description: Date-time response
-          schema:
-            type: object
-          examples:
-
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
-
-
-  /g12_cmd:
-    get:
-      summary: G12 command-Get_PIB
-      tags: [G1_Commands]
-      operationId: app.g12_cmd
-      description: Generates FP550 Cmd_Get_PIB() return message.
-
-      responses:
-        200:
-          description: PIB response
-          schema:
-            type: object
-          examples:
-
-            "ACKs": ack_s
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
-  /g13_cmd/{n_lines}:
-    get:
-      summary: G13 command-Move paper N-lines
-      tags: [G1_Commands]
-      operationId: app.g13_cmd
-      description: Force FP550 to Move paper N lines (no return data message).
-
-      responses:
-        200:
-          description: Move paper response
-          schema:
-            type: object
-          examples:
-
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
+      summary: G1 Commands
+      description: Generic command
+      operationId: app.g1_cmd
       parameters:
-        - name: n_lines
-          in: path
-          description: Number of lines to move paper.
+        - name: cmd
+          description: Command ID. 1-Date_Time, 2-PIB, 3-Paper_Move, 4-Status, 5-Get_Tax, 6-Diag, 7-Report_Art_All, 8-Get_Set_Tax
+          in: query
+          type: integer
           required: true
+        - name: data
+          description: Command data. Required for cmd-3, default 0.
+          in: query
           type: string
-  /g14_cmd:
-    get:
-      summary: G14 command-Get_Status
-      tags: [G1_Commands]
-      operationId: app.g14_cmd
-      description: Generates FP550 Cmd_Get_Status() return message.
-
+          required: true
+      produces:
+        - text/html
       responses:
-        200:
-          description: FP550 Status response
+        '200':
+          description: Response object
           schema:
             type: object
           examples:
-
-            "ACKs": ack_s
             "LEN": pck_Len
             "SEQ": pck_Seq
             "Cmd": pck_Cmd
             "Status": pck_Sts
             "recv_pck_Data": pck_Data
-  /g15_cmd:
-    get:
-      summary: G15 command-Get_Taxes
-      tags: [G1_Commands]
-      operationId: app.g15_cmd
-      description: Generates FP550 taxes, Cmd_Get_Tax() return message.
 
-      responses:
-        200:
-          description: Tax response
-          schema:
-            type: object
-          examples:
-
-            "ACKs": ack_s
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
-  /g16_cmd:
-    get:
-      summary: G16 command-Get_Diag
-      tags: [G1_Commands]
-      operationId: app.g16_cmd
-      description: Generates FP550 Cmd_Get_Diag() return message .
-
-      responses:
-        200:
-          description: Diag response -no Data
-          schema:
-            type: object
-          examples:
-
-            "ACKs": ack_s
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
-  /g17_cmd:
-    get:
-      summary: G17 command-Report All Article
-      tags: [G1_Commands]
-      operationId: app.g17_cmd
-      description: Generates FP550 Cmd_report_all() return message.
-
-      responses:
-        200:
-          description: Report All Articles response - no data
-          schema:
-            type: object
-          examples:
-
-            "ACKs": ack_s
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
-  /g18_cmd:
-    get:
-      summary: G18 command-Get_Set_Taxes
-      tags: [G1_Commands]
-      operationId: app.g18_cmd
-      description: Generates FP550 Cmd_Get_Set_Tax() return message.
-
-      responses:
-        200:
-          description: Tax response
-          schema:
-            type: object
-          examples:
-
-            "ACKs": ack_s
-            "LEN": pck_Len
-            "SEQ": pck_Seq
-            "Cmd": pck_Cmd
-            "Status": pck_Sts
-            "recv_pck_Data": pck_Data
   /g21_cmd:
     get:
       summary: G21 command-Take usb camera photo
@@ -233,135 +71,6 @@ paths:
           description: link to usb photo .jpg
           schema:
             type: string
-
-
-
-  /greeting/{name}:
-    get:
-      summary: Generate greeting
-      tags: [G1_Commands]
-
-      description: Generates a greeting message.
-      operationId: app.post_greeting
-
-      responses:
-        200:
-          description: greeting response
-          schema:
-            type: string
-          examples:
-            "text/plain": "Hello John"
-      parameters:
-        - name: name
-          in: path
-          description: Name of the person to greet.
-          required: true
-          type: string
-  /pets:
-    get:
-      tags: [Pets]
-      operationId: app.get_pets
-      summary: Get all pets
-      parameters:
-        - name: animal_type
-          in: query
-          type: string
-          pattern: "^[a-zA-Z0-9]*$"
-        - name: limit
-          in: query
-          type: integer
-          minimum: 0
-          default: 100
-      responses:
-        200:
-          description: Return pets
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Pet'
-  /pets/{pet_id}:
-    get:
-      tags: [Pets]
-      operationId: app.get_pet
-      summary: Get a single pet
-      parameters:
-        - $ref: '#/parameters/pet_id'
-      responses:
-        200:
-          description: Return pet
-          schema:
-            $ref: '#/definitions/Pet'
-        404:
-          description: Pet does not exist
-    put:
-      tags: [Pets]
-      operationId: app.put_pet
-      summary: Create or update a pet
-      parameters:
-        - $ref: '#/parameters/pet_id'
-        - name: pet
-          in: body
-          schema:
-            $ref: '#/definitions/Pet'
-      responses:
-        200:
-          description: Pet updated
-        201:
-          description: New pet created
-    delete:
-      tags: [Pets]
-      operationId: app.delete_pet
-      summary: Remove a pet
-      parameters:
-        - $ref: '#/parameters/pet_id'
-      responses:
-        204:
-          description: Pet was deleted
-        404:
-          description: Pet does not exist
-
-
-parameters:
-  pet_id:
-    name: pet_id
-    description: Pet's Unique identifier
-    in: path
-    type: string
-    required: true
-    pattern: "^[a-zA-Z0-9-]+$"
-
-definitions:
-  Pet:
-    type: object
-    required:
-      - name
-      - animal_type
-    properties:
-      id:
-        type: string
-        description: Unique identifier
-        example: "123"
-        readOnly: true
-      name:
-        type: string
-        description: Pet's name
-        example: "Susie"
-        minLength: 1
-        maxLength: 100
-      animal_type:
-        type: string
-        description: Kind of animal
-        example: "cat"
-        minLength: 1
-      tags:
-        type: object
-        description: Custom tags
-      created:
-        type: string
-        format: date-time
-        description: Creation time
-        example: "2015-07-07T15:49:51.230+02:00"
-        readOnly: true
 
 
 securityDefinitions:
