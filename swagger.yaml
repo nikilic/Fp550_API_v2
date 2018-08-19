@@ -41,7 +41,7 @@ paths:
           type: integer
           required: true
         - name: data
-          description: Command data. Required for cmd-3, default 0.
+          description: Command data. Default "" - Empty String
           in: query
           type: string
           default: ""
@@ -68,6 +68,24 @@ paths:
       responses:
         200:
           description: link to usb photo .jpg
+          schema:
+            type: string
+
+  /g31:
+    post:
+      tags: [G3_Commands]
+      summary: G3.1 Print Non-Fiscal
+      description: Prints non-fiscal for entered string
+      operationId: app.g31_cmd
+      parameters:
+        - name: data
+          description: String that needs to be printed
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Print result
           schema:
             type: string
 
