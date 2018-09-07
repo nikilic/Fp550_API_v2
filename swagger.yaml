@@ -88,7 +88,54 @@ paths:
           description: Print result
           schema:
             type: string
+  /hw_proxy/hello:
+    get:
+      summary: hello-ping for POS
+      tags: [POS_BOX]
+      operationId: app.hello
+      description: PING response to the POS request
 
+      responses:
+        200:
+          description: ping
+          schema:
+            type: string
+  /hw_proxy/handshake:
+    post:
+      summary: handshake for POS
+      tags: [POS_BOX]
+      operationId: app.handshake_json
+      description: handshake response to the POS request
+
+      responses:
+        200:
+          description: potvrda
+          schema:
+            type: boolean
+  /hw_proxy/status_json:
+    post:
+      summary: Status EscPOS drivera
+      tags: [POS_BOX]
+      operationId: app.status_json
+      description: Status with escpos printer connected response to the POS request
+
+      responses:
+        200:
+          description: escpos connected
+          schema:
+            type: object
+  /hw_proxy/print_xml_receipt:
+    post:
+      summary: print XML-HTML receipt
+      tags: [POS_BOX]
+      operationId: app.print_xml_receipt_json
+      description: Print to the escpos printer  POS receipt
+
+      responses:
+        200:
+          description: escpos connected
+          schema:
+            type: object
 
 securityDefinitions:
   oauth2:

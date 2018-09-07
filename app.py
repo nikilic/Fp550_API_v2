@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 import connexion
 import logging
+import html2text
 
 from commands import cmd_take_photo
 from commands import cmd_generic
-from flask import request
-
+from flask import request, make_response, jsonify
+from flask_cors import CORS
+from flask_cors import cross_origin
+#  CORS(app, resources=r'/hw_proxy/*')
 
 def g1_cmd(cmd, data):
     output = cmd_generic(cmd, data)
@@ -60,6 +63,36 @@ def g31_cmd(data):
         output = cmd_generic(42, lines)
     output = cmd_generic(39, "")
     return "Printed successfully"
+def hello():
+    # return PING
+    png = 'ping'
+    return make_response('ping')
+def handshake_json():
+
+    return jsonify(jsonrpc='2.0', result=True)
+def status_json():
+    statuses = {}
+    '''
+    for driver in drivers:
+        statuses[driver] = drivers[driver].get_status()
+        print (statuses)
+    '''
+    statuses = {
+ 'escpos': {'status': 'connected', 'messages': []
+            }
+}
+
+    return jsonify(jsonrpc='2.0', result=statuses)
+
+def print_xml_receipt_json():
+
+    #print(request.json)
+
+    receipt = request.json['params']['receipt']
+    #print(receipt)
+    print(html2text.html2text(receipt))
+    return jsonify(jsonrpc='2.0', result=True)
+
 
 
 logging.basicConfig(level=logging.INFO)
@@ -68,7 +101,8 @@ app.add_api('swagger.yaml')
 # set the WSGI application callable to allow using uWSGI:
 # uwsgi --http :8080 -w app
 application = app.app
-
+# add CORS support
+CORS(app.app)
 
 if __name__ == '__main__':
     app.run(port=8090)
