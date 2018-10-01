@@ -88,6 +88,24 @@ paths:
           description: Print result
           schema:
             type: string
+
+  /g32:
+    post:
+      tags: [G3_Commands]
+      summary: G3.2 Print Fiscal
+      description: Prints fiscal for entered string
+      operationId: app.g32_cmd
+      parameters:
+        - name: data
+          description: <PLU>,<Quantity>,<Price>/...
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Print result
+          schema:
+            type: string
   /hw_proxy/hello:
     get:
       summary: hello-ping for POS
