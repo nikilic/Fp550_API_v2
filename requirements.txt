@@ -3,3 +3,4 @@ Flask==0.10.1
 SQLAlchemy>=1.0.13
 Pyserial
 flask_cors
+html2text
