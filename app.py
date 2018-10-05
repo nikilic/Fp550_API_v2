@@ -73,11 +73,11 @@ def g32_cmd(data):
         return "Error Command 48"
     for i in range(0, len(dataArray)):
         dataPurchase = dataArray[i].split(",")
-        suma += dataPurchase[1] * dataPurchase[2]
+        suma += int(dataPurchase[1]) * int(dataPurchase[2])
         output = cmd_generic(52, "S+"+dataPurchase[0]+"*"+dataPurchase[1]+"#"+dataPurchase[2])
         if output["recv_pck_Data"][0] != 80:
             return "Error Print Article " + i
-    output = cmd_generic(53, "P"+suma)
+    output = cmd_generic(53, "P"+str(suma))
     output = cmd_generic(56, "")
     return "Printed successfully"
 
