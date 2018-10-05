@@ -69,7 +69,10 @@ def g32_cmd(data):
     dataArray = data.split("/")
     output = cmd_generic(48, "1;1,1")
     suma = 0
-    if output["recv_pck_Data"][4] != 44:
+    try:
+        if output["recv_pck_Data"][4] != 44:
+            return "Error Command 48"
+    except:
         return "Error Command 48"
     for i in range(0, len(dataArray)):
         dataPurchase = dataArray[i].split(",")
