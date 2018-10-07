@@ -106,6 +106,49 @@ paths:
           description: Print result
           schema:
             type: string
+
+
+
+  /g33:
+    post:
+      tags: [G3_Commands]
+      summary: G3.3 Write Article
+      description: Adds article to database
+      operationId: app.g33_cmd
+      parameters:
+        - name: plu
+          description: PLU 100+
+          in: query
+          type: integer
+          required: true
+        - name: price
+          description: Price
+          in: query
+          type: integer
+          required: true
+        - name: name
+          description: Name
+          in: query
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Output
+          schema:
+            type: string
+
+  /g34:
+    post:
+      tags: [G3_Commands]
+      summary: G3.4 Read All Articles
+      description: Outputs all articles
+      operationId: app.g34_cmd
+      responses:
+        '200':
+          description: List of articles
+          schema:
+            type: string
+
   /hw_proxy/hello:
     get:
       summary: hello-ping for POS

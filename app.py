@@ -10,6 +10,7 @@ from flask_cors import CORS
 from flask_cors import cross_origin
 #  CORS(app, resources=r'/hw_proxy/*')
 
+
 def g1_cmd(cmd, data):
     output = cmd_generic(cmd, data)
     return output
@@ -83,6 +84,31 @@ def g32_cmd(data):
     output = cmd_generic(53, "P"+str(suma))
     output = cmd_generic(56, "")
     return "Printed successfully"
+
+
+def g33_cmd(plu, price, name):
+    data = "P" + chr(0xC0) + plu + "," + price + "," + name
+    output = cmd_generic(107, data)
+    return output
+
+
+def g34_cmd():
+    output = cmd_generic(107, "F")
+    articles = ""
+    count = 0
+    while True:
+        for ch in output["recv_pck_Data"]:
+            if ch == 4:
+                output = cmd_generic(107, "N")
+                count = 0
+            elif ch == 70 and count == 0:
+                return articles
+            elif count == 0:
+                articles += "/" + chr(ch)
+                count += 1
+            else:
+                articles += chr(ch)
+                count += 1
 
 
 def hello():
