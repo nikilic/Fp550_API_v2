@@ -87,7 +87,7 @@ def g32_cmd(data):
 
 
 def g33_cmd(plu, price, name):
-    data = "P" + chr(0xC0) + plu + "," + price + "," + name
+    data = "P" + chr(0xC0) + str(plu) + "," + str(price) + "," + str(name)
     output = cmd_generic(107, data)
     return output
 
