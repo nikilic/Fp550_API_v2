@@ -2,9 +2,10 @@
 import connexion
 import logging
 import html2text
+import time
 
 from commands import cmd_take_photo
-from commands import cmd_generic
+from commands import cmd_generic, cmd_Write_Article
 from flask import request, make_response, jsonify
 from flask_cors import CORS
 from flask_cors import cross_origin
@@ -68,6 +69,22 @@ def g31_cmd(data):
 
 def g32_cmd(data):
     dataArray = data.split("/")
+    for ln in dataArray:
+        lnArray = ln.split(",")
+        if len(lnArray) != 3:
+            return "Bad formatting"
+        for i in lnArray:
+            try:
+                iInt = int(i)
+                if not isinstance(iInt, int):
+                    return "Bad formatting"
+            except:
+                return "Bad formatting"
+        output = cmd_generic(107,"R" + str(lnArray[0]))
+        if output["recv_pck_Data"][0] != 80:
+            return "Article not in database. PLU: " + lnArray[0]
+        
+    dataArray = data.split("/")
     output = cmd_generic(48, "1;1,1")
     suma = 0
     try:
@@ -79,16 +96,20 @@ def g32_cmd(data):
         dataPurchase = dataArray[i].split(",")
         suma += int(dataPurchase[1]) * int(dataPurchase[2])
         output = cmd_generic(52, "S+"+dataPurchase[0]+"*"+dataPurchase[1]+"#"+dataPurchase[2])
+        time.sleep(.300)
         if output["recv_pck_Data"][0] != 80:
-            return "Error Print Article " + i
+            return "Error Print Article " + str(i)
     output = cmd_generic(53, "P"+str(suma))
     output = cmd_generic(56, "")
     return "Printed successfully"
 
 
 def g33_cmd(plu, price, name):
-    data = "P" + chr(0xC0) + str(plu) + "," + str(price) + "," + str(name)
+    data = "P" + chr(128) + str(plu) + "," + str(price) + "," + str(name)
+    #data="P"+"\x80"+"00034,55,ROBA-AB"
+    print(data)
     output = cmd_generic(107, data)
+    # output = cmd_Write_Article()
     return output
 
 
@@ -137,8 +158,27 @@ def print_xml_receipt_json():
     #print(request.json)
 
     receipt = request.json['params']['receipt']
-    #print(receipt)
-    print(html2text.html2text(receipt))
+    print(receipt)
+    s = html2text.html2text(receipt)
+    start=s.find('-AAA-')
+    end = s.find('-ZZZ-')
+    articles = s[start:end]
+    print (articles)
+    ar_lines = articles.split(';',20)
+    print (ar_lines[0], ar_lines[1], ar_lines[2])
+    data=""
+    for lin in ar_lines:
+        
+        
+        ar_lin= lin.split('|',8)
+        print (ar_lin)
+        if len(ar_lin) >= 5:
+            data=data + ar_lin[2]  +',' + ar_lin[4] + ',' + ar_lin[6] +'/'
+            print (ar_lin[3])
+    data=data.replace(' ','')
+    data=data[:-1]
+    print (data)
+    output = g32_cmd(data)
     return jsonify(jsonrpc='2.0', result=True)
 
 
