@@ -11,10 +11,9 @@ import config
 if config.sim == False:
     port = serial.Serial("/dev/ttyUSB0", baudrate=19200, timeout=14.0)
     #port = serial.
-
-# print chr(SALE)
-#print SUBTOTAL, TOTAL
+    pass
 def whoami():
+
     cmd_name=inspect.stack()[1][3]
     cmd_name=cmd_name[4:]
     return cmd_name
@@ -66,6 +65,8 @@ def recv():
     global pck_Len
     global pck_Cmd
     global pck_Seq, pck_Sts
+
+    print("config_sim=",config.sim)
     if config.sim == False:
         line= []
         ack_s=[]
@@ -154,6 +155,7 @@ def recv():
             "Cmd": pck_Cmd,
             "Status": pck_Sts
         }
+    print('output=', output)
     return output
 
 
@@ -192,18 +194,19 @@ def cmd_Write_Article():
     print ("Write Artical  0x6b______________________")
 #    data="p'"+"\xc3\x31\x2c\x31\x30\x2c\xc0\xf0\xf2\xe8\xea\xe0\xeb"
     
-    usr_go=input ("Press enter to continue:")
-    data="P"+"\x80"+"00034,55,ROBA-AB"
+#    usr_go=input ("Press enter to continue:")
+ #   data="P"+"\x80"+"00034,55,ROBA-AB"
+    data=b"".join(["P","\x80","00034,55,ROBA-AB"])
 #    data="P" + chr(0xC0)+"1234,666,ROBA-AA"
-    print ('from write art:',data)
+ #   print ('from write art:',data)
     cmd1= 0x6B #Write Article x6B
-    pack=build_packet(cmd1, data)
-    for character in pack:
-      print (character, character.encode('hex'),';',)
+    pack=build_packet(cmd1, data_enc)
+#    for character in pack:
+ #     print (character, character.encode('hex'),';',)
 
     port.write(pack)  #send packet
     print ("Write Artical-Command SENT")
-    print ('SeqNum:',hex(seq_num(False)))
+#    print ('SeqNum:',hex(seq_num(False)))
     # Prijem odziva od FP
     recv()
 
@@ -253,11 +256,15 @@ def cmd_Non_Fiscal():
 
 def cmd_generic(cmd_code,data=""):
     ''' function to be called by the specific FP operationId function '''
+    
     pack=build_packet(cmd_code, data)
+    print("from_cmd_generic:", cmd_code, data)
+    print(pack)
 
     if config.sim == False:
-        pack_bytes=pack.encode()
-        port.write(pack_bytes)  #send packet
+        pack_bytes=pack.encode('latin-1')
+        print("bytes:", pack_bytes)
+        port.write(pack_bytes)  #send packet /pack_bytes
 
     rec_out = recv()
     return rec_out
@@ -266,7 +273,7 @@ def cmd_generic(cmd_code,data=""):
 def cmd_take_photo():
     """ Make photo by usb camera and save timestamped.jpg into /satic/images/ """
     pass
-    lnk = 'http://0.0.0.0:8090/'
+    #lnk = 'http://0.0.0.0:8090/'
     st= datetime.datetime.now().strftime("%Y-%m-%d--%H-%M") # exmp: 2018-07-01--16-57
     ts= str(st) #.split('.')[0] #eliminise miliseconds
     # ts11="/home/pi/Public/WWWpy/static/images/"+ts+".jpg"
