@@ -68,21 +68,9 @@ def g31_cmd(data):
 
 
 def g32_cmd(data):
-    dataArray = data.split("/")
-    for ln in dataArray:
-        lnArray = ln.split(",")
-        if len(lnArray) != 3:
-            return "Bad formatting"
-        for i in lnArray:
-            try:
-                iInt = int(i)
-                if not isinstance(iInt, int):
-                    return "Bad formatting"
-            except:
-                return "Bad formatting"
-        output = cmd_generic(107,"R" + str(lnArray[0]))
-        if output["recv_pck_Data"][0] != 80:
-            return "Article not in database. PLU: " + lnArray[0]
+    """Prints fiscal receipt and returns confirmation or error"""
+    if g32DataCheck(data) != True:
+        return g32DataCheck(data)
 
     dataArray = data.split("/")
     output = cmd_generic(48, "1;1,1")
@@ -102,6 +90,53 @@ def g32_cmd(data):
     output = cmd_generic(53, "P"+str(suma))
     output = cmd_generic(56, "")
     return "Printed successfully"
+
+
+def g32DataCheck(data):
+    """Checks formatting and product existence for g32_cmd(). Returns True or error message"""
+    dataArray = data.split("/")
+    for ln in dataArray:
+        lnArray = ln.split(",")
+        if len(lnArray) != 3:
+            return "Bad formatting"
+        try:
+            pluInt = int(lnArray[0])
+            if not isinstance(pluInt, int):
+                return "Bad formatting"
+
+            if "." in lnArray[1]:
+                qtyFloat = lnArray[1].split(".")
+                if len(qtyFloat) != 2:
+                    return "Bad formatting"
+                else:
+                    qty1Int = int(qtyFloat[0])
+                    qty2Int = int(qtyFloat[1])
+                    if not isinstance(qty1Int, int) and not isinstance(qty2Int, int) and len(qtyFloat[1]) == 2:
+                        return "Bad formatting"
+            else:
+                qtyInt = int(lnArray[1])
+                if not isinstance(qtyInt, int):
+                    return "Bad formatting"
+
+            if "." in lnArray[2]:
+                priceFloat = lnArray[2].split(".")
+                if len(priceFloat) != 2:
+                    return "Bad formatting"
+                else:
+                    price1Int = int(priceFloat[0])
+                    price2Int = int(priceFloat[1])
+                    if not isinstance(price1Int, int) and not isinstance(price2Int, int) and len(priceFloat[1]) == 2:
+                        return "Bad formatting"
+            else:
+                priceInt = int(lnArray[2])
+                if not isinstance(priceInt, int):
+                    return "Bad formatting"
+        except:
+            return "Bad formatting"
+        output = cmd_generic(107, "R" + str(lnArray[0]))
+        if output["recv_pck_Data"][0] != 80:
+            return "Article not in database. PLU: " + lnArray[0]
+    return True
 
 
 def g33_cmd(plu, price, name):
