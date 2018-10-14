@@ -82,7 +82,7 @@ def g32_cmd(data):
         return "Error Command 48"
     for i in range(0, len(dataArray)):
         dataPurchase = dataArray[i].split(",")
-        suma += int(dataPurchase[1]) * int(dataPurchase[2])
+        suma += float(dataPurchase[1]) * float(dataPurchase[2])
         output = cmd_generic(52, "S+"+dataPurchase[0]+"*"+dataPurchase[1]+"#"+dataPurchase[2])
         time.sleep(.300)
         if output["recv_pck_Data"][0] != 80:
