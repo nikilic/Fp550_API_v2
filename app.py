@@ -68,6 +68,18 @@ def g31_cmd(data):
 
 def g32_cmd(data):
     dataArray = data.split("/")
+    for ln in dataArray:
+        print(ln)
+        lnArray = ln.split(",")
+        if len(lnArray) != 3:
+            return "Bad formatting"
+        for i in lnArray:
+            if not isinstance(i, int):
+                return "Bad formatting"
+        output = cmd_generic(107,"F" + str(lnArray[0]))
+        if output["recv_pck_Data"][0] != 80:
+            return "Article not in database. PLU: " + lnArray[0]
+
     output = cmd_generic(48, "1;1,1")
     suma = 0
     try:
@@ -109,6 +121,12 @@ def g34_cmd():
             else:
                 articles += chr(ch)
                 count += 1
+
+
+def odooDataParse(data):
+    dataArray = data.split(";")
+    for art in dataArray:
+        artArray = art.split("|")
 
 
 def hello():
